@@ -51,7 +51,7 @@ public class BookRepository {
 
     public Book create(Book toCreate) {
         String query = """
-        insert into "book"("id", "name", "author_id", "pagNumber", "topic", "releaseDate") 
+        insert into "book"("id", "name", "author_id", "pagNumber", "topic", "release_date") 
         values (?, ?, ?, ?, ?, ?, ?);
     """;
         try {
@@ -59,7 +59,7 @@ public class BookRepository {
             prs.setString(1, toCreate.getId());
             prs.setString(2, toCreate.getName());
             prs.setString (3, toCreate.getAuthor().getId());
-            prs.setInt(4, toCreate.getPageNumber());
+            prs.setInt(4, toCreate.getPage_numbers());
             prs.setString(5, toCreate.getTopic().toString());
             prs.setDate(6, Date.valueOf(toCreate.getReleaseDate()));
             prs.executeUpdate();
@@ -74,16 +74,16 @@ public class BookRepository {
             update "book"
                 set "name" = ?,
                     "author_id" = ? ,
-                    "pageNumber" = ? ,
+                    "page_numbers" = ? ,
                     "topic" = ? ,
-                    "releaseDate" = ?
+                    "release_date" = ?
                 where "id" = ?
         """;
         try{
             PreparedStatement prs = connection.prepareStatement(query);
             prs.setString (1, toUpdate.getName());
             prs.setString(2, toUpdate.getAuthor().getId());
-            prs.setInt(3, toUpdate.getPageNumber());
+            prs.setInt(3, toUpdate.getPage_numbers());
             prs.setString (4, toUpdate.getTopic().toString());
             prs.setDate (5, Date.valueOf(toUpdate.getReleaseDate()));
             prs.setString (6, toUpdate.getId());
@@ -124,7 +124,7 @@ public class BookRepository {
                 rs.getString("id"),
                 rs.getString("name"),
                 author,
-                rs.getInt("pageNumber"),
+                rs.getInt("page_numbers"),
                 Topic.valueOf(rs.getString("topic")),
                 rs.getDate("releaseDate").toLocalDate()
 

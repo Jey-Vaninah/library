@@ -68,8 +68,8 @@ public class AuthorRepository {
 
     public Author create(Author toCreate){
         String query = """
-            insert into "student"("id", "name", "ref", "birthdate", "gender", "group_id") 
-            values (?, ?, ?, ?, ?, ?);
+            insert into "author"("id", "name", "gender") 
+            values (?, ?, ?);
          """;
         try{
             PreparedStatement prs = connection.prepareStatement(query);
