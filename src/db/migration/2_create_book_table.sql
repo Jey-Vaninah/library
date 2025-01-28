@@ -13,5 +13,5 @@ create table if not exists "book" (
     "author_id" varchar references "author"("id") not null,
     "page_numbers" int not null,
     "topic" topic,
-    "release_date" int check ("release_date" > 0) not null
+    "release_date" date not null
 );

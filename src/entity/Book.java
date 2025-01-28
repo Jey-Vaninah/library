@@ -1,6 +1,5 @@
 package entity;
 
-import java.sql.Date;
 import java.time.LocalDate;
 import java.util.Objects;
 
@@ -49,7 +48,7 @@ public class Book {
         return page_numbers;
     }
 
-    public void setPageNumbers(int page_numbers) {
+    public void setPage_numbers(int page_numbers) {
         this.page_numbers = page_numbers;
     }
 
