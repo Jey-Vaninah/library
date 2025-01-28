@@ -37,7 +37,7 @@ public class AuthorRepositoryTest {
                 "Jean Dupont",
                 Gender.MALE);
 
-        List<Author> actual = subject.getAll();
+        List<Author> actual = subject.findAll();
 
         assertTrue(actual.contains(expectedAuthor));
     }
