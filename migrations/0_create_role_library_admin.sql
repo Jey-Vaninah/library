@@ -17,3 +17,4 @@ ALTER DEFAULT PRIVILEGES FOR ROLE library_role
     GRANT ALL PRIVILEGES ON SEQUENCES TO library_role;
 GRANT ALL PRIVILEGES ON SCHEMA public TO library_role;
 \c library library_role
+

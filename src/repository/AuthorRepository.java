@@ -2,6 +2,7 @@ package repository;
 
 import entity.Author;
 import entity.Gender;
+import repository.conf.DatabaseConnection;
 
 import java.sql.*;
 import java.util.ArrayList;
@@ -10,15 +11,16 @@ import java.util.List;
 public class AuthorRepository {
     private final Connection connection;
 
+
     public AuthorRepository(Connection connection) {
         this.connection = connection;
     }
 
-    public Author findById(int id) {
+    public Author findById(String id) {
         String query = "select * from \"author\" where \"id\"=?;";
         try{
             PreparedStatement st = connection.prepareStatement(query);
-            st.setInt(1,id);
+            st.setString(1,id);
             ResultSet rs = st.executeQuery();
             if(rs.next()) {
                 return resultSetToAuthor(rs);
@@ -56,7 +58,7 @@ public class AuthorRepository {
             PreparedStatement prs = connection.prepareStatement(query);
             prs.setString (1, toUpdate.getName());
             prs.setString (2, toUpdate.getGender().toString());
-            prs.setInt (3, toUpdate.getId());
+            prs.setString (3, toUpdate.getId());
             prs.executeUpdate();
             return this.findById(toUpdate.getId());
         }catch (SQLException error){
@@ -73,7 +75,7 @@ public class AuthorRepository {
             PreparedStatement prs = connection.prepareStatement(query);
             prs.setString (1, toCreate.getName());
             prs.setString (2, toCreate.getGender().toString());
-            prs.setInt (3, toCreate.getId());
+            prs.setString (3, toCreate.getId());
             prs.executeUpdate();
             return this.findById(toCreate.getId());
         }catch (SQLException error){
@@ -95,9 +97,9 @@ public class AuthorRepository {
         """;
 
         try{
-            final Author toDelete = this.findById(Integer.parseInt(id));
+            final Author toDelete = this.findById((id));
             PreparedStatement prs = connection.prepareStatement(query);
-            prs.setInt (1, toDelete.getId());
+            prs.setString (1, toDelete.getId());
             prs.executeUpdate();
             return toDelete;
         }catch (SQLException error){

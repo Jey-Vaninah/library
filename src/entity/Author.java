@@ -13,7 +13,7 @@ public class Author {
         this.gender = gender;
     }
 
-    public int getId() {
+    public String getId() {
         return id;
     }
 
