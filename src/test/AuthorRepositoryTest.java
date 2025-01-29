@@ -9,40 +9,31 @@ import repository.conf.DatabaseConnection;
 import java.sql.Connection;
 import java.util.List;
 
-import static entity.Gender.MALE;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 import static org.junit.jupiter.api.Assertions.assertEquals;
+import static test.utils.AuthorTestDataUtils.jeanDupont;
 
-public class AuthorRepositoryTest {
+class AuthorRepositoryTest {
     final DatabaseConnection db = new DatabaseConnection();
     final Connection connection = db.getConnection();
     final AuthorRepository subject = new AuthorRepository(connection);
 
     @Test
-    public void find_by_id_ok(){
-        Author expectedAuthor = new Author(
-            "A001",
-            "Jean Dupont",
-            MALE
-        );
+    void find_by_id_ok(){
+        Author expected = jeanDupont();
 
-        Author actual = subject.findById("A001");
+        Author actual = subject.findById(expected.getId());
 
-        assertEquals(expectedAuthor,actual);
+        assertEquals(expected, actual);
     }
 
     @Test
-    public void read_all_authors_ok() {
-        Author expectedAuthor = new Author(
-            "A001",
-            "Jean Dupont",
-            MALE
-        );
+    void read_all_authors_ok() {
+        Author expected = jeanDupont();
         Pagination pagination = new Pagination(1, 10);
 
         List<Author> actual = subject.findAll(pagination);
 
-        System.out.println(actual);
-        assertTrue(actual.contains(expectedAuthor));
+        assertTrue(actual.contains(expected));
     }
 }

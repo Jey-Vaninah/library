@@ -9,13 +9,11 @@ import repository.Pagination;
 import repository.conf.DatabaseConnection;
 
 import java.sql.Connection;
-import java.time.LocalDate;
 import java.util.List;
 
-import static entity.Gender.FEMALE;
-import static entity.Topic.ROMANCE;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertTrue;
+import static test.utils.BookTestDataUtils.histoiresRomantiques;
 
 public class BookRepositoryTest {
     final DatabaseConnection db = new DatabaseConnection();
@@ -25,36 +23,20 @@ public class BookRepositoryTest {
 
     @Test
     public void find_by_id_ok(){
-        final Author author = new Author("A002","Marie Curie", FEMALE);
-        Book expectedBook = new Book(
-            "B001",
-            "Histoires Romantiques",
-            author,
-            320,
-            ROMANCE,
-            LocalDate.of(2001, 9, 25)
-        );
+        Book expected = histoiresRomantiques();
 
-        Book actual = subject.findById("B001");
+        Book actual = subject.findById(expected.getId());
 
-        assertEquals(expectedBook, actual);
+        assertEquals(expected, actual);
     }
 
     @Test
     public void read_all_book_ok() {
-        final Author author = new Author("A002","Marie Curie", FEMALE);
-        Book expectedBook = new Book(
-            "B001",
-            "Histoires Romantiques",
-            author,
-            320,
-            ROMANCE,
-            LocalDate.of(2001, 9, 25)
-        );
+        Book expected = histoiresRomantiques();
         Pagination pagination = new Pagination(1, 10);
 
         List<Book> actual = subject.findAll(pagination);
 
-        assertTrue(actual.contains(expectedBook));
+        assertTrue(actual.contains(expected));
     }
 }

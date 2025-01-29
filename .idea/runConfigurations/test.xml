@@ -3,7 +3,7 @@
     <module name="library" />
     <extension name="coverage">
       <pattern>
-        <option name="PATTERN" value="test.*" />
+        <option name="PATTERN" value="test.utils.*" />
         <option name="ENABLED" value="true" />
       </pattern>
     </extension>
