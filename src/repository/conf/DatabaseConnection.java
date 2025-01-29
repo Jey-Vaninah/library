@@ -19,7 +19,7 @@ public class DatabaseConnection {
                        BD_PASSWORD
                );
            }catch (SQLException e) {
-               throw new RuntimeException("Error occurent when try to connect to database",e);
+               throw new RuntimeException("Error happened when try to connect to database",e);
            }
        }
         return connection;

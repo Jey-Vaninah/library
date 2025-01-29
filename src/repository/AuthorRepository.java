@@ -2,7 +2,6 @@ package repository;
 
 import entity.Author;
 import entity.Gender;
-import repository.conf.DatabaseConnection;
 
 import java.sql.*;
 import java.util.ArrayList;
@@ -10,7 +9,6 @@ import java.util.List;
 
 public class AuthorRepository {
     private final Connection connection;
-
 
     public AuthorRepository(Connection connection) {
         this.connection = connection;
@@ -30,7 +28,6 @@ public class AuthorRepository {
             throw new RuntimeException(e);
         }
     }
-
 
     public List<Author> findAll() {
         String query = "select * from \"author\";";
@@ -91,7 +88,7 @@ public class AuthorRepository {
         return this.udpate(crupdateAuthor);
     }
 
-    public Object Author(String id){
+    public Author deleteById(String id){
         String query = """
             delete from "author" where "id" = ?;
         """;
@@ -109,11 +106,9 @@ public class AuthorRepository {
 
     private Author resultSetToAuthor(ResultSet rs) throws SQLException {
         return new Author(
-                rs.getString("id"),
-                rs.getString("name"),
-                Gender.valueOf(rs.getString("gender"))
+            rs.getString("id"),
+            rs.getString("name"),
+            Gender.valueOf(rs.getString("gender"))
         );
     }
-
-
 }

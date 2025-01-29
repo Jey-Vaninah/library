@@ -7,17 +7,17 @@ public class Book {
     private String id;
     private String name;
     private Author author;
-    private int page_numbers;
+    private Integer pageNumbers;
     private Topic topic;
-    private LocalDate release_date;
+    private LocalDate releaseDate;
 
-    public Book(String id, String name, Author author, int page_numbers, Topic topic, LocalDate release_date) {
+    public Book(String id, String name, Author author, int pageNumbers, Topic topic, LocalDate releaseDate) {
         this.id = id;
         this.name = name;
         this.author = author;
-        this.page_numbers = page_numbers;
+        this.pageNumbers = pageNumbers;
         this.topic = topic;
-        this.release_date = release_date;
+        this.releaseDate = releaseDate;
     }
 
     public String getId() {
@@ -44,12 +44,12 @@ public class Book {
         this.author = author;
     }
 
-    public int getPage_numbers() {
-        return page_numbers;
+    public int getPageNumbers() {
+        return pageNumbers;
     }
 
-    public void setPage_numbers(int page_numbers) {
-        this.page_numbers = page_numbers;
+    public void setPageNumbers(int pageNumbers) {
+        this.pageNumbers = pageNumbers;
     }
 
     public Topic getTopic() {
@@ -61,11 +61,11 @@ public class Book {
     }
 
     public LocalDate getReleaseDate() {
-        return release_date;
+        return releaseDate;
     }
 
     public void setReleaseDate(LocalDate release_date) {
-        this.release_date = release_date;
+        this.releaseDate = release_date;
     }
 
     @Override
@@ -73,12 +73,12 @@ public class Book {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         Book book = (Book) o;
-        return page_numbers == book.page_numbers && Objects.equals(id, book.id) && Objects.equals(name, book.name) && Objects.equals(author, book.author) && topic == book.topic && Objects.equals(release_date, book.release_date);
+        return pageNumbers == book.pageNumbers && Objects.equals(id, book.id) && Objects.equals(name, book.name) && Objects.equals(author, book.author) && topic == book.topic && Objects.equals(releaseDate, book.releaseDate);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(id, name, author, page_numbers, topic, release_date);
+        return Objects.hash(id, name, author, pageNumbers, topic, releaseDate);
     }
 
     @Override
@@ -87,9 +87,9 @@ public class Book {
                 "id='" + id + '\'' +
                 ", name='" + name + '\'' +
                 ", author=" + author +
-                ", page_numbers=" + page_numbers +
+                ", page_numbers=" + pageNumbers +
                 ", topic=" + topic +
-                ", release_date=" + release_date +
+                ", release_date=" + releaseDate +
                 '}';
     }
 }

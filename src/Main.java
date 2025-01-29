@@ -10,7 +10,6 @@ public class Main {
         final Connection connection = db.getConnection();
         final AuthorRepository authorRepository = new AuthorRepository(connection);
         final BookRepository bookRepository = new BookRepository(connection,authorRepository);
-
         System.out.println(bookRepository.findAll());
     }
 }
