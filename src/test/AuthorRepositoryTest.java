@@ -4,6 +4,7 @@ import entity.Author;
 import entity.Gender;
 import org.junit.jupiter.api.Test;
 import repository.AuthorRepository;
+import repository.Pagination;
 import repository.conf.DatabaseConnection;
 
 import java.sql.Connection;
@@ -37,8 +38,9 @@ public class AuthorRepositoryTest {
             "Jean Dupont",
             Gender.MALE
         );
+        Pagination pagination = new Pagination(1, 10);
 
-        List<Author> actual = subject.findAll();
+        List<Author> actual = subject.findAll(pagination);
 
         assertTrue(actual.contains(expectedAuthor));
     }

@@ -7,6 +7,7 @@ import entity.Topic;
 import org.junit.jupiter.api.Test;
 import repository.AuthorRepository;
 import repository.BookRepository;
+import repository.Pagination;
 import repository.conf.DatabaseConnection;
 
 import java.sql.Connection;
@@ -50,8 +51,9 @@ public class BookRepositoryTest {
             Topic.ROMANCE,
             LocalDate.of(2001, 9, 25)
         );
+        Pagination pagination = new Pagination(1, 10);
 
-        List<Book> actual = subject.findAll();
+        List<Book> actual = subject.findAll(pagination);
 
         assertTrue(actual.contains(expectedBook));
     }

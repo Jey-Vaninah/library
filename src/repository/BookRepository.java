@@ -8,7 +8,7 @@ import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
 
-public class BookRepository {
+public class BookRepository implements Repository<Book>{
     private Connection connection = null;
     private final AuthorRepository authorRepository;
 
@@ -17,6 +17,7 @@ public class BookRepository {
         this.authorRepository = authorRepository;
     }
 
+    @Override
     public Book findById(String id) {
         String query = "SELECT * FROM book WHERE id = ?";
         try (
@@ -32,11 +33,15 @@ public class BookRepository {
         return null;
     }
 
-    public List<Book> findAll() {
-        String query = "SELECT * FROM book";
+    @Override
+    public List<Book> findAll(Pagination pagination) {
+        String query = "SELECT * FROM book limit ? offset ?;";
         List<Book> books = new ArrayList<>();
         try {
-            ResultSet rs = connection.createStatement().executeQuery(query);
+            PreparedStatement preparedStatement = connection.prepareStatement(query);
+            preparedStatement.setInt(1, (pagination.getPage() - 1) * pagination.getPageSize());
+            preparedStatement.setInt(2, pagination.getPageSize());
+            ResultSet rs = preparedStatement.executeQuery();
             while (rs.next()) {
                 books.add(resulSetToBook(rs));
             }
@@ -47,6 +52,7 @@ public class BookRepository {
         return books;
     }
 
+    @Override
     public Book create(Book toCreate) {
         String query = """
         insert into "book"("id", "name", "author_id", "page_numbers", "topic", "release_date") 
@@ -67,7 +73,8 @@ public class BookRepository {
         }
     }
 
-    public Book udpate (Book toUpdate){
+    @Override
+    public Book update(Book toUpdate){
         String query = """
             update "book"
                 set "name" = ?,
@@ -92,14 +99,16 @@ public class BookRepository {
         }
     }
 
+    @Override
     public Book crupdate(Book crupdateBook){
         final boolean isCreate = this.findById(crupdateBook.getId()) == null;
         if(isCreate) {
             return this.create(crupdateBook);
         }
-        return this.udpate(crupdateBook);
+        return this.update(crupdateBook);
     }
 
+    @Override
     public Book deleteById(String id){
         String query = """
             delete from "book" where "id" = ?;
