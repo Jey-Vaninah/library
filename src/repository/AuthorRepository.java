@@ -36,8 +36,8 @@ public class AuthorRepository implements Repository<Author> {
         List<Author> authors = new ArrayList<>();
         try {
             PreparedStatement preparedStatement = connection.prepareStatement(query);
-            preparedStatement.setInt(1, (pagination.getPage() - 1) * pagination.getPageSize());
-            preparedStatement.setInt(2, pagination.getPageSize());
+            preparedStatement.setInt(1, pagination.getPageSize());
+            preparedStatement.setInt(2, (pagination.getPage() - 1) * pagination.getPageSize());
             ResultSet rs = preparedStatement.executeQuery();
             while(rs.next()){
                 authors.add(resultSetToAuthor(rs));

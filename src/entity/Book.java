@@ -44,11 +44,11 @@ public class Book {
         this.author = author;
     }
 
-    public int getPageNumbers() {
+    public Integer getPageNumbers() {
         return pageNumbers;
     }
 
-    public void setPageNumbers(int pageNumbers) {
+    public void setPageNumbers(Integer pageNumbers) {
         this.pageNumbers = pageNumbers;
     }
 
@@ -64,8 +64,8 @@ public class Book {
         return releaseDate;
     }
 
-    public void setReleaseDate(LocalDate release_date) {
-        this.releaseDate = release_date;
+    public void setReleaseDate(LocalDate releaseDate) {
+        this.releaseDate = releaseDate;
     }
 
     @Override
@@ -73,7 +73,7 @@ public class Book {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         Book book = (Book) o;
-        return pageNumbers == book.pageNumbers && Objects.equals(id, book.id) && Objects.equals(name, book.name) && Objects.equals(author, book.author) && topic == book.topic && Objects.equals(releaseDate, book.releaseDate);
+        return Objects.equals(id, book.id) && Objects.equals(name, book.name) && Objects.equals(author, book.author) && Objects.equals(pageNumbers, book.pageNumbers) && topic == book.topic && Objects.equals(releaseDate, book.releaseDate);
     }
 
     @Override
@@ -84,12 +84,12 @@ public class Book {
     @Override
     public String toString() {
         return "Book{" +
-                "id='" + id + '\'' +
-                ", name='" + name + '\'' +
-                ", author=" + author +
-                ", page_numbers=" + pageNumbers +
-                ", topic=" + topic +
-                ", release_date=" + releaseDate +
-                '}';
+            "id='" + id + '\'' +
+            ", name='" + name + '\'' +
+            ", author=" + author +
+            ", pageNumbers=" + pageNumbers +
+            ", topic=" + topic +
+            ", releaseDate=" + releaseDate +
+            '}';
     }
 }

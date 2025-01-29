@@ -6,17 +6,17 @@ import java.sql.SQLException;
 
 public class DatabaseConnection {
     private Connection connection;
-    private final String BD_USERNAME = System.getenv("BD_USERNAME");
-    private final String BD_PASSWORD = System.getenv("BD_PASSWORD");
-    private final String BD_URL = System.getenv("BD_URL");
+    private final String DB_USERNAME = System.getenv("DB_USERNAME");
+    private final String DB_PASSWORD = System.getenv("DB_PASSWORD");
+    private final String DB_URL = System.getenv("DB_URL");
 
     public Connection getConnection() {
        if (connection == null) {
            try {
                connection = DriverManager.getConnection(
-                       BD_URL,
-                       BD_USERNAME,
-                       BD_PASSWORD
+                   DB_URL,
+                   DB_USERNAME,
+                   DB_PASSWORD
                );
            }catch (SQLException e) {
                throw new RuntimeException("Error happened when try to connect to database",e);

@@ -1,7 +1,6 @@
 package test;
 
 import entity.Author;
-import entity.Gender;
 import org.junit.jupiter.api.Test;
 import repository.AuthorRepository;
 import repository.Pagination;
@@ -10,6 +9,7 @@ import repository.conf.DatabaseConnection;
 import java.sql.Connection;
 import java.util.List;
 
+import static entity.Gender.MALE;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
@@ -23,7 +23,7 @@ public class AuthorRepositoryTest {
         Author expectedAuthor = new Author(
             "A001",
             "Jean Dupont",
-            Gender.MALE
+            MALE
         );
 
         Author actual = subject.findById("A001");
@@ -36,12 +36,13 @@ public class AuthorRepositoryTest {
         Author expectedAuthor = new Author(
             "A001",
             "Jean Dupont",
-            Gender.MALE
+            MALE
         );
         Pagination pagination = new Pagination(1, 10);
 
         List<Author> actual = subject.findAll(pagination);
 
+        System.out.println(actual);
         assertTrue(actual.contains(expectedAuthor));
     }
 }

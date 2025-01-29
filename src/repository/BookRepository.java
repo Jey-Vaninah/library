@@ -39,8 +39,8 @@ public class BookRepository implements Repository<Book>{
         List<Book> books = new ArrayList<>();
         try {
             PreparedStatement preparedStatement = connection.prepareStatement(query);
-            preparedStatement.setInt(1, (pagination.getPage() - 1) * pagination.getPageSize());
-            preparedStatement.setInt(2, pagination.getPageSize());
+            preparedStatement.setInt(1, pagination.getPageSize());
+            preparedStatement.setInt(2, (pagination.getPage() - 1) * pagination.getPageSize());
             ResultSet rs = preparedStatement.executeQuery();
             while (rs.next()) {
                 books.add(resulSetToBook(rs));
@@ -126,14 +126,14 @@ public class BookRepository implements Repository<Book>{
     }
 
     private Book resulSetToBook(ResultSet rs) throws SQLException {
-        final  Author author = this.authorRepository.findById((rs.getString("book_id")));
+        final  Author author = this.authorRepository.findById((rs.getString("author_id")));
         return new Book(
             rs.getString("id"),
             rs.getString("name"),
             author,
             rs.getInt("page_numbers"),
             Topic.valueOf(rs.getString("topic")),
-            rs.getDate("releaseDate").toLocalDate()
+            rs.getDate("release_date").toLocalDate()
         );
     }
 }
