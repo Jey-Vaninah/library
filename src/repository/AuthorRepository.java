@@ -76,9 +76,9 @@ public class AuthorRepository implements Repository<Author> {
          """;
         try{
             PreparedStatement prs = connection.prepareStatement(query);
-            prs.setString (1, toCreate.getName());
+            prs.setString (1, toCreate.getId());
             prs.setString (2, toCreate.getGender().toString());
-            prs.setString (3, toCreate.getId());
+            prs.setString (3, toCreate.getName());
             prs.executeUpdate();
             return this.findById(toCreate.getId());
         }catch (SQLException error){

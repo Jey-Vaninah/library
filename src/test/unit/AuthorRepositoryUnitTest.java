@@ -14,8 +14,7 @@ import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.mockito.ArgumentMatchers.any;
-import static org.mockito.Mockito.mock;
-import static org.mockito.Mockito.when;
+import static org.mockito.Mockito.*;
 import static test.utils.AuthorTestDataUtils.*;
 
 class AuthorRepositoryUnitTest {
@@ -77,5 +76,57 @@ class AuthorRepositoryUnitTest {
     List<Author> actuals = this.subject.findAll(new Pagination(1, 10));
 
     assertEquals(expecteds, actuals);
+  }
+
+  @Test
+  void can_create_author_ok() throws SQLException {
+    Author expected = jeanDupont();
+
+    when(preparedStatementMock.executeUpdate()).thenReturn(1);
+    when(resultSetMock.next()).thenReturn(true).thenReturn(false);
+    when(resultSetMock.getString("id")).thenReturn(expected.getId());
+    when(resultSetMock.getString("name")).thenReturn(expected.getName());
+    when(resultSetMock.getString("gender")).thenReturn(expected.getGender().toString());
+
+    var actual = this.subject.create(expected);
+
+    verify(preparedStatementMock, times(2)).setString(1, expected.getId());
+    verify(preparedStatementMock, times(1)).setString(2, expected.getGender().toString());
+    verify(preparedStatementMock, times(1)).setString(3, expected.getName());
+    assertEquals(expected, actual);
+  }
+
+  @Test
+  void can_update_author_ok() throws SQLException {
+    Author expected = jeanDupont();
+
+    when(preparedStatementMock.executeUpdate()).thenReturn(1);
+    when(resultSetMock.next()).thenReturn(true).thenReturn(false);
+    when(resultSetMock.getString("id")).thenReturn(expected.getId());
+    when(resultSetMock.getString("name")).thenReturn(expected.getName());
+    when(resultSetMock.getString("gender")).thenReturn(expected.getGender().toString());
+
+    var actual = this.subject.update(expected);
+
+    verify(preparedStatementMock, times(1)).setString(1, expected.getId());
+    verify(preparedStatementMock, times(1)).setString(3, expected.getId());
+    verify(preparedStatementMock, times(1)).setString(1, expected.getName());
+    verify(preparedStatementMock, times(1)).setString(2, expected.getGender().toString());
+    assertEquals(expected, actual);
+  }
+
+  @Test
+  void can_delete_author() throws SQLException {
+    Author expected = jeanDupont();
+    when(preparedStatementMock.executeUpdate()).thenReturn(1);
+    when(resultSetMock.next()).thenReturn(true).thenReturn(false);
+    when(resultSetMock.getString("id")).thenReturn(expected.getId());
+    when(resultSetMock.getString("name")).thenReturn(expected.getName());
+    when(resultSetMock.getString("gender")).thenReturn(expected.getGender().toString());
+
+    var actual = this.subject.deleteById(expected.getId());
+
+    verify(preparedStatementMock, times(2)).setString(1, expected.getId());
+    assertEquals(expected, actual);
   }
 }
