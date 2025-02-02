@@ -13,8 +13,8 @@
     <option name="TEST_OBJECT" value="package" />
     <envs>
       <env name="DB_PASSWORD" value="123456" />
-      <env name="DB_URL" value="jdbc:postgresql://localhost:5432/library" />
-      <env name="DB_USERNAME" value="library_role" />
+      <env name="DB_URL" value="jdbc:postgresql://localhost:5432/management" />
+      <env name="DB_USERNAME" value="book" />
     </envs>
     <method v="2">
       <option name="Make" enabled="true" />
