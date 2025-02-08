@@ -11,24 +11,27 @@ public class DatabaseConnection {
     private final String DB_URL = System.getenv("DB_URL");
 
     public Connection getConnection() {
-       if (connection == null) {
-           try {
-               connection = DriverManager.getConnection(
-                   DB_URL,
-                   DB_USERNAME,
-                   DB_PASSWORD
-               );
-           }catch (SQLException e) {
-               throw new RuntimeException("Error happened when try to connect to database",e);
-           }
+       if (connection != null) {
+           return connection;
+       }
+
+       try {
+           connection = DriverManager.getConnection(
+               DB_URL,
+               DB_USERNAME,
+               DB_PASSWORD
+           );
+       } catch (SQLException e) {
+           throw new RuntimeException("Error happened when try to connect to database",e);
        }
         return connection;
     }
 
     public void closeConnection() {
-        if(connection != null) {
+        if(connection == null) {
             return;
         }
+
         try{
             connection.close();
         }catch (SQLException e){

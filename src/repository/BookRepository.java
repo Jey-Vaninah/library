@@ -136,4 +136,9 @@ public class BookRepository implements Repository<Book>{
             rs.getDate("release_date").toLocalDate()
         );
     }
+
+    @Override
+    public List<Book> findByCriteria(List<Criteria> criteria, Order order) {
+        return List.of();
+    }
 }

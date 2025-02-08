@@ -11,6 +11,7 @@ create table if not exists  "author"
 (
     "id" varchar primary key,
     "name" varchar not null,
+    "birth_date" date not null,
     "gender" gender
  );
 

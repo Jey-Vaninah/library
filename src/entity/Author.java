@@ -1,16 +1,42 @@
 package entity;
 
+import java.time.LocalDate;
 import java.util.Objects;
 
 public class Author {
     private String id;
     private String name;
     private Gender gender;
+    private LocalDate birthdate;
 
-    public Author(String id, String name, Gender gender) {
+    public Author(String id, String name, Gender gender, LocalDate birthdate) {
         this.id = id;
         this.name = name;
         this.gender = gender;
+        this.birthdate = birthdate;
+    }
+
+    @Override
+    public String toString() {
+        return "Author{" +
+                "id='" + id + '\'' +
+                ", name='" + name + '\'' +
+                ", gender=" + gender +
+                ", birthdate=" + birthdate +
+                '}';
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        Author author = (Author) o;
+        return Objects.equals(id, author.id) && Objects.equals(name, author.name) && gender == author.gender && Objects.equals(birthdate, author.birthdate);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(id, name, gender, birthdate);
     }
 
     public String getId() {
@@ -37,25 +63,11 @@ public class Author {
         this.gender = gender;
     }
 
-    @Override
-    public boolean equals(Object o) {
-        if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
-        Author author = (Author) o;
-        return Objects.equals(id, author.id) && Objects.equals(name, author.name) && gender == author.gender;
+    public LocalDate getBirthdate() {
+        return birthdate;
     }
 
-    @Override
-    public int hashCode() {
-        return Objects.hash(id, name, gender);
-    }
-
-    @Override
-    public String toString() {
-        return "Author{" +
-                "id='" + id + '\'' +
-                ", name='" + name + '\'' +
-                ", gender=" + gender +
-                '}';
+    public void setBirthdate(LocalDate birthdate) {
+        this.birthdate = birthdate;
     }
 }
