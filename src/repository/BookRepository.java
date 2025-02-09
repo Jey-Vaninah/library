@@ -142,6 +142,44 @@ public class BookRepository implements Repository<Book>{
 
     @Override
     public List<Book> findByCriteria(List<Criteria> criteria, Order order) {
-        return List.of();
+        List<Book> books = new ArrayList<>();
+        StringBuilder sql = new StringBuilder("SELECT * FROM book WHERE 1=1");
+        List<Object> parameters = new ArrayList<>();
+
+        for (Criteria c : criteria) {
+            if ("name".equals(c.getColumn())) {
+                sql.append(" AND ").append(c.getColumn()).append(" ILIKE ?");
+                parameters.add("%" + c.getValue().toString() + "%");
+            } else if ("author_id".equals(c.getColumn())) {
+                sql.append(" AND ").append(c.getColumn()).append(" = ?");
+                parameters.add(c.getValue().toString());
+            } else if ("topic".equals(c.getColumn())) {
+                sql.append(" AND ").append(c.getColumn()).append(" = ?");
+                parameters.add(c.getValue());
+            } else if ("release_date".equals(c.getColumn())) {
+                sql.append(" AND ").append(c.getColumn()).append(" = ?");
+                parameters.add(Date.valueOf(c.getValue().toString()));
+            }
+        }
+
+        sql.append(" order by ").append(order.getOrderBy()).append(" ").append(order.getOrderValue());
+
+        try (PreparedStatement statement = connection.prepareStatement(sql.toString())) {
+            for (int i = 0; i < parameters.size(); i++) {
+                Object value = parameters.get(i);
+                if(value.getClass().isEnum()){
+                    statement.setObject(i  + 1, value, Types.OTHER);
+                    continue;
+                }
+                statement.setObject(i + 1, value);
+            }
+            ResultSet rs = statement.executeQuery();
+            while (rs.next()) {
+                books.add(resulSetToBook(rs));
+            }
+        } catch (SQLException error) {
+            throw new RuntimeException(error);
+        }
+        return books;
     }
 }

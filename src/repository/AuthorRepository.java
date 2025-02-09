@@ -132,7 +132,7 @@ public class AuthorRepository implements Repository<Author> {
     @Override
     public List<Author> findByCriteria(List<Criteria> criteria, Order order) {
         List<Author> authors = new ArrayList<>();
-        StringBuilder sql = new StringBuilder("SELECT a.id, a.name, a.birth_date FROM author a WHERE 1=1");
+        StringBuilder sql = new StringBuilder("SELECT a.id, a.gender, a.name, a.birth_date FROM author a WHERE 1=1");
         List<Object> parameters = new ArrayList<>();
 
         for (Criteria c : criteria) {
@@ -142,6 +142,9 @@ public class AuthorRepository implements Repository<Author> {
             } else if ("birth_date".equals(c.getColumn())) {
                 sql.append(" AND a.").append(c.getColumn()).append(" = ?");
                 parameters.add(c.getValue().toString());
+            } else if ("gender".equals(c.getColumn())) {
+                sql.append(" AND a.").append(c.getColumn()).append(" = ?");
+                parameters.add(c.getValue());
             }
         }
         sql.append(" ORDER BY a.").append(order.getOrderBy()).append(" ").append(order.getOrderValue());
@@ -149,7 +152,12 @@ public class AuthorRepository implements Repository<Author> {
         try {
             PreparedStatement statement = connection.prepareStatement(sql.toString());
             for (int i = 0; i < parameters.size(); i++) {
-                statement.setObject(i + 1, parameters.get(i));
+                Object value = parameters.get(i);
+                if(value.getClass().isEnum()){
+                    statement.setObject(i  + 1, value, Types.OTHER);
+                    continue;
+                }
+                statement.setObject(i + 1, value);
             }
             ResultSet rs = statement.executeQuery();
             while(rs.next()){

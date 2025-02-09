@@ -106,7 +106,7 @@ class AuthorRepositoryUnitTest {
 
   @Test
   void can_update_author_ok() throws SQLException {
-    Author expected = jeanDupont();
+    Author expected = marieCurie();
 
     when(preparedStatementMock.executeUpdate()).thenReturn(1);
     when(resultSetMock.next()).thenReturn(true).thenReturn(false);
@@ -126,7 +126,7 @@ class AuthorRepositoryUnitTest {
 
   @Test
   void can_delete_author() throws SQLException {
-    Author expected = jeanDupont();
+    Author expected = albertCamus();
     when(preparedStatementMock.executeUpdate()).thenReturn(1);
     when(resultSetMock.next()).thenReturn(true).thenReturn(false);
     when(resultSetMock.getString("id")).thenReturn(expected.getId());
