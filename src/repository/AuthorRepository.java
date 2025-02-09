@@ -41,9 +41,11 @@ public class AuthorRepository implements Repository<Author> {
 
     @Override
     public List<Author> findAll(Pagination pagination, Order order) {
-        StringBuilder query = new StringBuilder("select * from \"author\" limit ? offset ?");
+        StringBuilder query = new StringBuilder("select * from \"author\"");
+        query.append(" order by ").append(order.getOrderBy()).append(" ").append(order.getOrderValue());
+        query.append(" limit ? offset ?");
+
         List<Author> authors = new ArrayList<>();
-        query.append(" ORDER BY ").append(order.getOrderBy()).append(" ").append(order.getOrderValue());
 
         try {
             PreparedStatement preparedStatement = connection.prepareStatement(query.toString());
@@ -135,7 +137,7 @@ public class AuthorRepository implements Repository<Author> {
 
         for (Criteria c : criteria) {
             if ("name".equals(c.getColumn())) {
-                sql.append(" AND a.").append(c.getColumn()).append(" ILIKE ?");
+                sql.append(" AND a.").append(c.getColumn()).append(" ilike ?");
                 parameters.add("%" + c.getValue().toString() + "%");
             } else if ("birth_date".equals(c.getColumn())) {
                 sql.append(" AND a.").append(c.getColumn()).append(" = ?");

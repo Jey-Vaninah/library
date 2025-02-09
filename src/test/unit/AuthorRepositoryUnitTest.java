@@ -4,17 +4,16 @@ import entity.Author;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import repository.AuthorRepository;
+import repository.Order;
 import repository.Pagination;
 
-import java.sql.Connection;
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
-import java.sql.SQLException;
+import java.sql.*;
 import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.*;
+import static repository.Order.OrderValue.ASC;
 import static test.utils.AuthorTestDataUtils.*;
 
 class AuthorRepositoryUnitTest {
@@ -38,6 +37,7 @@ class AuthorRepositoryUnitTest {
     when(resultSetMock.getString("id")).thenReturn(expected.getId());
     when(resultSetMock.getString("name")).thenReturn(expected.getName());
     when(resultSetMock.getString("gender")).thenReturn(expected.getGender().toString());
+    when(resultSetMock.getDate("birth_date")).thenReturn(Date.valueOf(expected.getBirthdate()));
 
     Author actual = this.subject.findById(expected.getId());
 
@@ -65,15 +65,22 @@ class AuthorRepositoryUnitTest {
       .thenReturn(marieCurie.getId())
       .thenReturn(albertCamus.getId());
     when(resultSetMock.getString("name"))
-        .thenReturn(jeanDupont.getName())
-        .thenReturn(marieCurie.getName())
-        .thenReturn(albertCamus.getName());
+      .thenReturn(jeanDupont.getName())
+      .thenReturn(marieCurie.getName())
+      .thenReturn(albertCamus.getName());
     when(resultSetMock.getString("gender"))
-        .thenReturn(jeanDupont.getGender().toString())
-        .thenReturn(marieCurie.getGender().toString())
-        .thenReturn(albertCamus.getGender().toString());
+      .thenReturn(jeanDupont.getGender().toString())
+      .thenReturn(marieCurie.getGender().toString())
+      .thenReturn(albertCamus.getGender().toString());
+    when(resultSetMock.getDate("birth_date"))
+      .thenReturn(Date.valueOf(jeanDupont.getBirthdate()))
+      .thenReturn(Date.valueOf(marieCurie.getBirthdate()))
+      .thenReturn(Date.valueOf(albertCamus.getBirthdate()));
 
-    List<Author> actuals = this.subject.findAll(new Pagination(1, 10));
+    List<Author> actuals = this.subject.findAll(
+        new Pagination(1, 10),
+        new Order("name", ASC)
+    );
 
     assertEquals(expecteds, actuals);
   }
@@ -87,6 +94,7 @@ class AuthorRepositoryUnitTest {
     when(resultSetMock.getString("id")).thenReturn(expected.getId());
     when(resultSetMock.getString("name")).thenReturn(expected.getName());
     when(resultSetMock.getString("gender")).thenReturn(expected.getGender().toString());
+    when(resultSetMock.getDate("birth_date")).thenReturn(Date.valueOf(expected.getBirthdate()));
 
     var actual = this.subject.create(expected);
 
@@ -105,6 +113,7 @@ class AuthorRepositoryUnitTest {
     when(resultSetMock.getString("id")).thenReturn(expected.getId());
     when(resultSetMock.getString("name")).thenReturn(expected.getName());
     when(resultSetMock.getString("gender")).thenReturn(expected.getGender().toString());
+    when(resultSetMock.getDate("birth_date")).thenReturn(Date.valueOf(expected.getBirthdate()));
 
     var actual = this.subject.update(expected);
 
@@ -123,6 +132,7 @@ class AuthorRepositoryUnitTest {
     when(resultSetMock.getString("id")).thenReturn(expected.getId());
     when(resultSetMock.getString("name")).thenReturn(expected.getName());
     when(resultSetMock.getString("gender")).thenReturn(expected.getGender().toString());
+    when(resultSetMock.getDate("birth_date")).thenReturn(Date.valueOf(expected.getBirthdate()));
 
     var actual = this.subject.deleteById(expected.getId());
 

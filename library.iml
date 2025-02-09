@@ -10,7 +10,7 @@
     <orderEntry type="module-library">
       <library>
         <CLASSES>
-          <root url="jar://$MODULE_DIR$/../../../libs/apiguardian-api-1.1.2.jar!/" />
+          <root url="jar://$USER_HOME$/Jars/apiguardian-api-1.1.2.jar!/" />
         </CLASSES>
         <JAVADOC />
         <SOURCES />
@@ -19,7 +19,7 @@
     <orderEntry type="module-library">
       <library>
         <CLASSES>
-          <root url="jar://$MODULE_DIR$/../../../libs/byte-buddy-1.16.1.jar!/" />
+          <root url="jar://$USER_HOME$/Jars/byte-buddy-1.16.1.jar!/" />
         </CLASSES>
         <JAVADOC />
         <SOURCES />
@@ -28,7 +28,7 @@
     <orderEntry type="module-library">
       <library>
         <CLASSES>
-          <root url="jar://$MODULE_DIR$/../../../libs/byte-buddy-agent-1.16.1.jar!/" />
+          <root url="jar://$USER_HOME$/Jars/byte-buddy-agent-1.16.1.jar!/" />
         </CLASSES>
         <JAVADOC />
         <SOURCES />
@@ -37,7 +37,7 @@
     <orderEntry type="module-library">
       <library>
         <CLASSES>
-          <root url="jar://$MODULE_DIR$/../../../libs/junit-jupiter-api-5.11.4.jar!/" />
+          <root url="jar://$USER_HOME$/Jars/junit-jupiter-api-5.11.4.jar!/" />
         </CLASSES>
         <JAVADOC />
         <SOURCES />
@@ -46,7 +46,7 @@
     <orderEntry type="module-library">
       <library>
         <CLASSES>
-          <root url="jar://$MODULE_DIR$/../../../libs/junit-platform-commons-1.11.4.jar!/" />
+          <root url="jar://$USER_HOME$/Jars/junit-platform-commons-1.11.4.jar!/" />
         </CLASSES>
         <JAVADOC />
         <SOURCES />
@@ -55,7 +55,7 @@
     <orderEntry type="module-library">
       <library>
         <CLASSES>
-          <root url="jar://$MODULE_DIR$/../../../libs/mockito-core-5.15.2.jar!/" />
+          <root url="jar://$USER_HOME$/Jars/mockito-core-5.15.2.jar!/" />
         </CLASSES>
         <JAVADOC />
         <SOURCES />
@@ -64,7 +64,7 @@
     <orderEntry type="module-library">
       <library>
         <CLASSES>
-          <root url="jar://$MODULE_DIR$/../../../libs/opentest4j-1.2.0.jar!/" />
+          <root url="jar://$USER_HOME$/Jars/opentest4j-1.2.0.jar!/" />
         </CLASSES>
         <JAVADOC />
         <SOURCES />
@@ -73,7 +73,7 @@
     <orderEntry type="module-library">
       <library>
         <CLASSES>
-          <root url="jar://$MODULE_DIR$/../../../libs/postgresql-42.7.4.jar!/" />
+          <root url="jar://$USER_HOME$/Jars/postgresql-42.7.4.jar!/" />
         </CLASSES>
         <JAVADOC />
         <SOURCES />

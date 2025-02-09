@@ -1,8 +1,8 @@
 package repository;
 
 public class Criteria {
-    private String column;
-    private Object value;
+    private final String column;
+    private final Object value;
 
     public Object getValue() {
         return value;

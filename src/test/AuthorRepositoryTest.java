@@ -3,15 +3,16 @@ package test;
 import entity.Author;
 import org.junit.jupiter.api.Test;
 import repository.AuthorRepository;
+import repository.Order;
 import repository.Pagination;
 import repository.conf.DatabaseConnection;
 
 import java.sql.Connection;
 import java.util.List;
 
-import static org.junit.jupiter.api.Assertions.assertTrue;
 import static org.junit.jupiter.api.Assertions.assertEquals;
-import static test.utils.AuthorTestDataUtils.jeanDupont;
+import static repository.Order.OrderValue.ASC;
+import static test.utils.AuthorTestDataUtils.*;
 
 class AuthorRepositoryTest {
     final DatabaseConnection db = new DatabaseConnection();
@@ -29,11 +30,16 @@ class AuthorRepositoryTest {
 
     @Test
     void read_all_authors_ok() {
-        Author expected = jeanDupont();
+        List<Author> expecteds = List.of(
+            albertCamus(),
+            jeanDupont(),
+            marieCurie()
+        );
         Pagination pagination = new Pagination(1, 10);
+        Order order = new Order("name", ASC);
 
-        List<Author> actual = subject.findAll(pagination);
+        List<Author> actuals = subject.findAll(pagination, order);
 
-        assertTrue(actual.contains(expected));
+        assertEquals(expecteds, actuals);
     }
 }

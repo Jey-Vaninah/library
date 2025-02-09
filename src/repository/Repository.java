@@ -10,5 +10,4 @@ public interface Repository<T> {
   T update(T id);
   T crupdate(T id);
   List<T> findByCriteria(List<Criteria> criteria, Order order);
-
 }

@@ -4,6 +4,7 @@ import entity.Book;
 import org.junit.jupiter.api.Test;
 import repository.AuthorRepository;
 import repository.BookRepository;
+import repository.Order;
 import repository.Pagination;
 import repository.conf.DatabaseConnection;
 
@@ -11,8 +12,8 @@ import java.sql.Connection;
 import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertTrue;
-import static test.utils.BookTestDataUtils.histoiresRomantiques;
+import static repository.Order.OrderValue.ASC;
+import static test.utils.BookTestDataUtils.*;
 
 class BookRepositoryTest {
     final DatabaseConnection db = new DatabaseConnection();
@@ -31,11 +32,16 @@ class BookRepositoryTest {
 
     @Test
     void read_all_book_ok() {
-        Book expected = histoiresRomantiques();
+        List<Book> expecteds = List.of(
+            histoiresRomantiques(),
+            leGrandRire(),
+            rireEtVie()
+        );
         Pagination pagination = new Pagination(1, 10);
+        Order order = new Order("name", ASC);
 
-        List<Book> actual = subject.findAll(pagination);
+        List<Book> actuals = subject.findAll(pagination, order);
 
-        assertTrue(actual.contains(expected));
+        assertEquals(expecteds, actuals);
     }
 }

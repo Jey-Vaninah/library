@@ -9,7 +9,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class BookRepository implements Repository<Book>{
-    private Connection connection = null;
+    private final Connection connection;
     private final AuthorRepository authorRepository;
 
     public BookRepository(Connection connection, AuthorRepository authorRepository) {
@@ -34,11 +34,14 @@ public class BookRepository implements Repository<Book>{
     }
 
     @Override
-    public List<Book> findAll(Pagination pagination) {
-        String query = "SELECT * FROM book limit ? offset ?;";
+    public List<Book> findAll(Pagination pagination, Order order) {
+        StringBuilder query = new StringBuilder("select * from \"book\"");
+        query.append(" order by ").append(order.getOrderBy()).append(" ").append(order.getOrderValue());
+        query.append(" limit ? offset ?");
         List<Book> books = new ArrayList<>();
+
         try {
-            PreparedStatement preparedStatement = connection.prepareStatement(query);
+            PreparedStatement preparedStatement = connection.prepareStatement(query.toString());
             preparedStatement.setInt(1, pagination.getPageSize());
             preparedStatement.setInt(2, (pagination.getPage() - 1) * pagination.getPageSize());
             ResultSet rs = preparedStatement.executeQuery();
@@ -55,7 +58,7 @@ public class BookRepository implements Repository<Book>{
     @Override
     public Book create(Book toCreate) {
         String query = """
-        insert into "book"("id", "name", "author_id", "page_numbers", "topic", "release_date") 
+        insert into "book"("id", "name", "author_id", "page_numbers", "topic", "release_date")
         values (?, ?, ?, ?, ?, ?, ?);
     """;
         try {

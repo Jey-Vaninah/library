@@ -6,6 +6,7 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import repository.AuthorRepository;
 import repository.BookRepository;
+import repository.Order;
 import repository.Pagination;
 
 import java.sql.*;
@@ -15,6 +16,7 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.*;
 import static org.mockito.Mockito.times;
+import static repository.Order.OrderValue.ASC;
 import static test.utils.BookTestDataUtils.histoiresRomantiques;
 import static test.utils.BookTestDataUtils.leGrandRire;
 import static test.utils.BookTestDataUtils.rireEtVie;
@@ -100,7 +102,10 @@ class BookRepositoryUnitTest {
         .thenReturn(Date.valueOf(histoiresRomantiques.getReleaseDate()))
         .thenReturn(Date.valueOf(leGrandRire.getReleaseDate()))
         .thenReturn(Date.valueOf(rireEtVie.getReleaseDate()));
-    List<Book> actuals = this.subject.findAll(new Pagination(1, 10));
+    List<Book> actuals = this.subject.findAll(
+      new Pagination(1, 10),
+      new Order("name", ASC)
+    );
 
     assertEquals(expecteds, actuals);
   }
