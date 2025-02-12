@@ -51,11 +51,12 @@ class AuthorRepositoryTest {
             marieCurie()
         );
         Order order = new Order("name", ASC);
+        Pagination pagination = new Pagination(1, 10);
         List<Criteria> criteria = List.of(
             new Criteria("name", "marie")
         );
 
-        List<Author> actuals = subject.findByCriteria(criteria, order);
+        List<Author> actuals = subject.findByCriteria(criteria, order, pagination);
 
         assertEquals(expecteds, actuals);
     }
@@ -67,11 +68,12 @@ class AuthorRepositoryTest {
             jeanDupont()
         );
         Order order = new Order("name", ASC);
+        Pagination pagination = new Pagination(1, 10);
         List<Criteria> criteria = List.of(
             new Criteria("gender", MALE)
         );
 
-        List<Author> actuals = subject.findByCriteria(criteria, order);
+        List<Author> actuals = subject.findByCriteria(criteria, order, pagination);
 
         assertEquals(expecteds, actuals);
     }

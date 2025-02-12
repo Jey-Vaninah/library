@@ -141,7 +141,7 @@ public class BookRepository implements Repository<Book>{
     }
 
     @Override
-    public List<Book> findByCriteria(List<Criteria> criteria, Order order) {
+    public List<Book> findByCriteria(List<Criteria> criteria, Order order, Pagination pagination) {
         List<Book> books = new ArrayList<>();
         StringBuilder sql = new StringBuilder("SELECT * FROM book WHERE 1=1");
         List<Object> parameters = new ArrayList<>();
@@ -163,6 +163,9 @@ public class BookRepository implements Repository<Book>{
         }
 
         sql.append(" order by ").append(order.getOrderBy()).append(" ").append(order.getOrderValue());
+        sql.append(" limit ").append(pagination.getPageSize()).append(" offset ").append(
+            (pagination.getPage()  - 1) * pagination.getPageSize()
+        );
 
         try (PreparedStatement statement = connection.prepareStatement(sql.toString())) {
             for (int i = 0; i < parameters.size(); i++) {

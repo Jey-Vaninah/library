@@ -51,11 +51,12 @@ class BookRepositoryTest {
             histoiresRomantiques()
         );
         Order order = new Order("name", ASC);
+        Pagination pagination = new Pagination(1, 10);
         List<Criteria> criteria = List.of(
             new Criteria("name", "histoires")
         );
 
-        List<Book> actuals = subject.findByCriteria(criteria, order);
+        List<Book> actuals = subject.findByCriteria(criteria, order, pagination);
 
         assertEquals(expecteds, actuals);
     }
@@ -66,11 +67,12 @@ class BookRepositoryTest {
             histoiresRomantiques()
         );
         Order order = new Order("name", ASC);
+        Pagination pagination = new Pagination(1, 10);
         List<Criteria> criteria = List.of(
             new Criteria("author_id", marieCurie().getId())
         );
 
-        List<Book> actuals = subject.findByCriteria(criteria, order);
+        List<Book> actuals = subject.findByCriteria(criteria, order, pagination);
 
         assertEquals(expecteds, actuals);
     }
@@ -82,11 +84,12 @@ class BookRepositoryTest {
             rireEtVie()
         );
         Order order = new Order("name", ASC);
+        Pagination pagination = new Pagination(1, 10);
         List<Criteria> criteria = List.of(
             new Criteria("topic", COMEDY)
         );
 
-        List<Book> actuals = subject.findByCriteria(criteria, order);
+        List<Book> actuals = subject.findByCriteria(criteria, order, pagination);
 
         assertEquals(expecteds, actuals);
     }
@@ -97,12 +100,13 @@ class BookRepositoryTest {
             histoiresRomantiques()
         );
         Order order = new Order("name", ASC);
+        Pagination pagination = new Pagination(1, 10);
         List<Criteria> criteria = List.of(
             new Criteria("name", "histoi"),
             new Criteria("topic", ROMANCE)
         );
 
-        List<Book> actuals = subject.findByCriteria(criteria, order);
+        List<Book> actuals = subject.findByCriteria(criteria, order, pagination);
 
         assertEquals(expecteds, actuals);
     }

@@ -130,7 +130,7 @@ public class AuthorRepository implements Repository<Author> {
     }
 
     @Override
-    public List<Author> findByCriteria(List<Criteria> criteria, Order order) {
+    public List<Author> findByCriteria(List<Criteria> criteria, Order order, Pagination pagination) {
         List<Author> authors = new ArrayList<>();
         StringBuilder sql = new StringBuilder("SELECT a.id, a.gender, a.name, a.birth_date FROM author a WHERE 1=1");
         List<Object> parameters = new ArrayList<>();
@@ -147,7 +147,10 @@ public class AuthorRepository implements Repository<Author> {
                 parameters.add(c.getValue());
             }
         }
-        sql.append(" ORDER BY a.").append(order.getOrderBy()).append(" ").append(order.getOrderValue());
+        sql.append(" order by a.").append(order.getOrderBy()).append(" ").append(order.getOrderValue());
+        sql.append(" limit ").append(pagination.getPageSize()).append(" offset ").append(
+            (pagination.getPage()  - 1) * pagination.getPageSize()
+        );
 
         try {
             PreparedStatement statement = connection.prepareStatement(sql.toString());
