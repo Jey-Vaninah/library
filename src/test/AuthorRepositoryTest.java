@@ -9,6 +9,7 @@ import repository.Pagination;
 import repository.conf.DatabaseConnection;
 
 import java.sql.Connection;
+import java.time.LocalDate;
 import java.util.List;
 
 import static entity.Gender.MALE;
@@ -53,7 +54,9 @@ class AuthorRepositoryTest {
         Order order = new Order("name", ASC);
         Pagination pagination = new Pagination(1, 10);
         List<Criteria> criteria = List.of(
-            new Criteria("name", "marie")
+            new Criteria("name", "marie"),
+            new Criteria("birth_date_from", LocalDate.parse("2007-06-01")),
+            new Criteria("birth_date_end", LocalDate.parse("2007-06-20"))
         );
 
         List<Author> actuals = subject.findByCriteria(criteria, order, pagination);

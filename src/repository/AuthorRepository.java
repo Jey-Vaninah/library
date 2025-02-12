@@ -4,6 +4,7 @@ import entity.Author;
 import entity.Gender;
 
 import java.sql.*;
+import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -134,19 +135,29 @@ public class AuthorRepository implements Repository<Author> {
         List<Author> authors = new ArrayList<>();
         StringBuilder sql = new StringBuilder("SELECT a.id, a.gender, a.name, a.birth_date FROM author a WHERE 1=1");
         List<Object> parameters = new ArrayList<>();
+        LocalDate birthDateFrom = null;
+        LocalDate birthDateEnd = null;
 
         for (Criteria c : criteria) {
             if ("name".equals(c.getColumn())) {
                 sql.append(" AND a.").append(c.getColumn()).append(" ilike ?");
                 parameters.add("%" + c.getValue().toString() + "%");
-            } else if ("birth_date".equals(c.getColumn())) {
-                sql.append(" AND a.").append(c.getColumn()).append(" = ?");
-                parameters.add(c.getValue().toString());
+            } else if ("birth_date_from".equals(c.getColumn())) {
+                birthDateFrom = (LocalDate) c.getValue();
+            }else if("birth_date_end".equals(c.getColumn())) {
+                birthDateEnd = (LocalDate) c.getValue();
             } else if ("gender".equals(c.getColumn())) {
                 sql.append(" AND a.").append(c.getColumn()).append(" = ?");
                 parameters.add(c.getValue());
             }
         }
+
+        if(birthDateFrom != null && birthDateEnd != null) {
+            sql.append(" and a.birth_date between ? and ?");
+            parameters.add(birthDateFrom);
+            parameters.add(birthDateEnd);
+        }
+
         sql.append(" order by a.").append(order.getOrderBy()).append(" ").append(order.getOrderValue());
         sql.append(" limit ").append(pagination.getPageSize()).append(" offset ").append(
             (pagination.getPage()  - 1) * pagination.getPageSize()
